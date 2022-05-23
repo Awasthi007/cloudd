@@ -1,0 +1,94 @@
+  #include<bits/stdc++.h>
+using namespace std;
+int findminDistance(bool* visited, int* distance, int n)
+{
+    int vertex = -1;
+    
+    for(int i=0; i<n; i++)
+    {
+        if(!visited[i] &&(vertex == -1 || distance[vertex] > distance[i]))
+        {
+            vertex = i;
+        }
+    }
+    
+    return vertex;
+}
+void dijkstra(int** graph, int n)
+{
+    bool* visited = new bool[n]();
+    int* distance = new int[n];
+    fill(distance, distance+n, INT_MAX);
+    
+    distance[0] = 0;
+    
+    for(int i=0; i<n-1; i++)
+    {
+        int minD = findminDistance(visited, distance, n);
+        visited[minD] = true;
+        
+        for(int j=0; j<n; j++)
+        {
+            if(graph[minD][j] != 0 && !visited[j])
+            {
+                if(distance[j] > (distance[minD] + graph[minD][j]))
+                {
+                    distance[j] = (distance[minD] + graph[minD][j]);
+                }
+            }
+        }
+    }
+    
+    for(int i=0; i<n; i++)
+    {
+        cout<<i<<" "<<distance[i]<<endl;
+    }
+}
+int main()
+{
+    
+    // write your code here
+    int t;
+    cin>>t;
+    
+    while(t--)
+    {
+        int n,e;
+        cin>>n>>e;
+        
+        int** graph = new int*[n];
+        for(int i=0; i<n; i++)
+        {
+            graph[i] = new int[n];
+            for(int j=0; j<n; j++)
+            {
+                graph[i][j] = 0;
+            }
+        }
+        
+        for(int i=0; i<e; i++)
+        {
+            int x,y,w;
+            cin>>x>>y>>w;
+            
+            if(graph[x][y] == 0)
+            {
+                graph[x][y] = w;
+            	graph[y][x] = w;
+            }
+            else
+            {
+                if(graph[x][y] > w)
+                {
+                    graph[x][y] = w;
+            		graph[y][x] = w;
+                }
+            }
+        }
+        
+        dijkstra(graph, n);
+        
+        
+    }
+    return 0;
+}
