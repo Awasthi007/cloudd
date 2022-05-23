@@ -1,0 +1,92 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+
+void helper_bfs(vector<int> graph[], queue<int> q, bool visited[]){
+    if(q.empty())
+        return;
+    int x = q.front();
+    q.pop();
+    cout<<x<<" ";
+    visited[x] = true;
+    
+    for(auto u : graph[x])
+    {
+        if(!visited[u]){
+            q.push(u);
+            visited[u] = true;
+        }
+    }
+    
+    helper_bfs(graph, q, visited);
+    
+}
+
+
+void bfs(vector<int> graph[], int n)
+{
+    bool visited[n+1];
+    for(int i=0; i<=n ;i++)
+        visited[i] = false;
+        
+    for(int i=1; i<=n; i++){
+        if(!visited[i]){
+            
+            queue<int> q;
+            q.push(i);
+            helper_bfs(graph,  q, visited);
+        }
+    }
+    cout<<'\n';
+}
+
+void helper_dfs(vector<int> graph[], int v, bool visited[])
+{
+    cout<<v<<" ";
+    visited[v] = true;
+    
+    for(auto u: graph[v])
+    {
+        if(!visited[u])
+       { 
+           helper_dfs(graph, u, visited);
+       }
+    }
+}
+
+
+void dfs(vector<int> graph[], int n)
+{
+    bool visited[n+1];
+    for(int i=0; i<=n ;i++)
+        visited[i] = false;
+        
+    for(int i=1; i<=n; i++){
+        if(!visited[i]){
+            helper_dfs(graph, i, visited);
+        }
+    }
+    cout<<'\n';
+}
+
+
+int main()
+{
+    int n,e;
+    cin>>n>>e;
+    
+    vector<int> graph[n+1];
+    int src,dest;
+    for(int i=0; i<e; i++)
+    {
+        cin>>src>>dest;
+        graph[src].push_back(dest);
+        graph[dest].push_back(src);
+    }
+    
+    bfs(graph, n);
+    dfs(graph, n);
+    
+    
+    return 0;
+}
