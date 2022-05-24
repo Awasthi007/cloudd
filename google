@@ -1,0 +1,15 @@
+print 'Content-Type: text/plain'
+print ''
+print 'Hello there Chuck'
+
+#n = int(input())
+
+#number = int(input("Enter number: "))
+number = [10,20,35]
+
+if number%2==0:
+    print("EVEN")
+else:
+    print("ODD")
+    
+    https://google-app-engine.en.uptodown.com/windows/download
